@@ -1,0 +1,23 @@
+# Clinical Drug Safety Engine — Dependencies
+
+# Core framework
+fastapi==0.115.6
+uvicorn==0.34.0
+pydantic==2.10.4
+
+# Environment management
+python-dotenv==1.0.1
+
+# Groq API client — cloud LLM inference (replaces local llama-cpp-python)
+# Free tier: 30 req/min, 14,400 req/day — https://console.groq.com
+groq>=0.9.0
+
+# HuggingFace Hub (kept for potential future local model support)
+huggingface_hub>=0.21.0
+
+# Testing
+pytest==8.3.4
+httpx==0.28.1
+
+# Type checking (development)
+mypy==1.13.0

@@ -1,0 +1,306 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * Clinical Drug Safety Engine — Medical-grade design system.
+ * All colors are oklch tokens. Use semantic tokens only — never hardcode.
+ */
+
+@theme inline {
+  --font-sans:
+    "Inter", "SF Pro Text", "Roboto", ui-sans-serif, system-ui, -apple-system,
+    "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* Clinical semantic tokens */
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-danger-soft: var(--danger-soft);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-warning-soft: var(--warning-soft);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-success-soft: var(--success-soft);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  --color-info-soft: var(--info-soft);
+  --color-surface: var(--surface);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-grid-line: var(--grid-line);
+
+  --shadow-clinical: 0 1px 2px 0 rgb(15 23 42 / 0.04), 0 1px 3px 0 rgb(15 23 42 / 0.06);
+  --shadow-clinical-lg: 0 4px 12px -2px rgb(15 23 42 / 0.06), 0 2px 6px -2px rgb(15 23 42 / 0.04);
+}
+
+:root {
+  --radius: 0.5rem;
+
+  /* Background — very light gray #F9FAFB */
+  --background: oklch(0.985 0.002 247);
+  --foreground: oklch(0.18 0.03 250);
+
+  --surface: oklch(1 0 0);
+  --surface-elevated: oklch(1 0 0);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.03 250);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.03 250);
+
+  /* Primary — Deep Medical Blue #1E3A8A */
+  --primary: oklch(0.36 0.15 264);
+  --primary-foreground: oklch(0.99 0.005 247);
+
+  /* Secondary — Teal #0D9488 */
+  --secondary: oklch(0.62 0.11 192);
+  --secondary-foreground: oklch(0.99 0.005 247);
+
+  --muted: oklch(0.965 0.005 247);
+  --muted-foreground: oklch(0.45 0.02 250);
+
+  --accent: oklch(0.95 0.015 230);
+  --accent-foreground: oklch(0.36 0.15 264);
+
+  /* Danger — Red #DC2626 */
+  --destructive: oklch(0.58 0.22 27);
+  --destructive-foreground: oklch(0.99 0.005 247);
+  --danger: oklch(0.58 0.22 27);
+  --danger-foreground: oklch(0.99 0.005 247);
+  --danger-soft: oklch(0.965 0.04 22);
+
+  /* Warning — Amber #F59E0B */
+  --warning: oklch(0.76 0.16 70);
+  --warning-foreground: oklch(0.25 0.05 60);
+  --warning-soft: oklch(0.97 0.04 80);
+
+  /* Success — Green #16A34A */
+  --success: oklch(0.62 0.16 145);
+  --success-foreground: oklch(0.99 0.005 247);
+  --success-soft: oklch(0.965 0.04 145);
+
+  /* Info — medical blue tint */
+  --info: oklch(0.55 0.13 250);
+  --info-foreground: oklch(0.99 0.005 247);
+  --info-soft: oklch(0.965 0.025 250);
+
+  --border: oklch(0.92 0.008 247);
+  --input: oklch(0.92 0.008 247);
+  --ring: oklch(0.36 0.15 264);
+  --grid-line: oklch(0.93 0.008 247);
+
+  --chart-1: oklch(0.36 0.15 264);
+  --chart-2: oklch(0.62 0.11 192);
+  --chart-3: oklch(0.58 0.22 27);
+  --chart-4: oklch(0.76 0.16 70);
+  --chart-5: oklch(0.62 0.16 145);
+
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.18 0.03 250);
+  --sidebar-primary: oklch(0.36 0.15 264);
+  --sidebar-primary-foreground: oklch(0.99 0.005 247);
+  --sidebar-accent: oklch(0.965 0.005 247);
+  --sidebar-accent-foreground: oklch(0.36 0.15 264);
+  --sidebar-border: oklch(0.92 0.008 247);
+  --sidebar-ring: oklch(0.36 0.15 264);
+}
+
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html,
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    letter-spacing: -0.015em;
+  }
+}
+
+/* Inter font */
+@import url("https://rsms.me/inter/inter.css");
+
+/* ------------------------------------------------------------------
+ * Chat Noir — scoped dark/neon theme for the Clinical Notes workspace.
+ * Applied via the `.chat-noir` class so the rest of the app stays light.
+ * ------------------------------------------------------------------ */
+.chat-noir {
+  --noir-bg: oklch(0.16 0.01 150);
+  --noir-bg-deep: oklch(0.12 0.008 150);
+  --noir-surface: oklch(0.19 0.012 150);
+  --noir-surface-2: oklch(0.22 0.014 150);
+  --noir-border: oklch(0.28 0.02 150 / 0.8);
+  --noir-border-soft: oklch(0.26 0.015 150 / 0.5);
+  --noir-text: oklch(0.97 0.005 150);
+  --noir-text-dim: oklch(0.72 0.012 150);
+  --noir-text-faint: oklch(0.55 0.015 150);
+  --noir-neon: oklch(0.92 0.22 130);
+  --noir-neon-soft: oklch(0.92 0.22 130 / 0.18);
+  --noir-neon-glow: 0 0 0 1px oklch(0.92 0.22 130 / 0.35),
+    0 0 24px oklch(0.92 0.22 130 / 0.35),
+    0 0 48px oklch(0.92 0.22 130 / 0.18);
+  --noir-danger: oklch(0.72 0.22 25);
+  --noir-warning: oklch(0.85 0.18 85);
+
+  background: radial-gradient(
+      ellipse 80% 60% at 50% 0%,
+      oklch(0.92 0.22 130 / 0.05),
+      transparent 60%
+    ),
+    var(--noir-bg-deep);
+  color: var(--noir-text);
+  font-family: var(--font-sans);
+}
+
+.chat-noir .noir-mono {
+  font-family: var(--font-mono);
+  letter-spacing: 0.02em;
+}
+
+.chat-noir .noir-card {
+  background: var(--noir-surface);
+  border: 1px solid var(--noir-border-soft);
+  border-radius: 0.875rem;
+  box-shadow:
+    inset 0 1px 0 0 oklch(1 0 0 / 0.03),
+    0 16px 40px -16px oklch(0 0 0 / 0.7);
+}
+
+.chat-noir .noir-card-inset {
+  background: var(--noir-bg);
+  border: 1px solid var(--noir-border-soft);
+  border-radius: 0.625rem;
+}
+
+.chat-noir .noir-cta {
+  background: var(--noir-neon);
+  color: oklch(0.16 0.04 150);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 0.625rem;
+  box-shadow: var(--noir-neon-glow);
+  transition:
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 200ms;
+}
+.chat-noir .noir-cta:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    0 0 0 1px oklch(0.92 0.22 130 / 0.5),
+    0 0 32px oklch(0.92 0.22 130 / 0.5),
+    0 0 64px oklch(0.92 0.22 130 / 0.25);
+}
+.chat-noir .noir-cta:active {
+  transform: translateY(0);
+}
+
+.chat-noir .noir-pulse {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--noir-neon);
+  box-shadow: 0 0 12px var(--noir-neon);
+}
+.chat-noir .noir-pulse::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 9999px;
+  background: var(--noir-neon);
+  opacity: 0.4;
+  animation: noir-ping 1.8s cubic-bezier(0, 0, 0.2, 1) infinite;
+}
+@keyframes noir-ping {
+  75%, 100% {
+    transform: scale(2.2);
+    opacity: 0;
+  }
+}
+
+.chat-noir .noir-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-noir .noir-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-noir .noir-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--noir-border);
+  border-radius: 9999px;
+}
+
+.chat-noir .noir-caret {
+  display: inline-block;
+  width: 7px;
+  height: 12px;
+  background: var(--noir-neon);
+  margin-left: 2px;
+  vertical-align: middle;
+  animation: noir-blink 1s steps(2, end) infinite;
+  box-shadow: 0 0 6px var(--noir-neon);
+}
+@keyframes noir-blink {
+  50% { opacity: 0; }
+}
+
+.chat-noir .noir-input {
+  background: var(--noir-bg);
+  border: 1px solid var(--noir-border-soft);
+  color: var(--noir-text);
+  border-radius: 0.625rem;
+  transition: border-color 180ms, box-shadow 180ms;
+}
+.chat-noir .noir-input:focus-within {
+  border-color: oklch(0.92 0.22 130 / 0.6);
+  box-shadow: 0 0 0 3px oklch(0.92 0.22 130 / 0.12);
+}
+.chat-noir .noir-input textarea::placeholder,
+.chat-noir .noir-input input::placeholder {
+  color: var(--noir-text-faint);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+}

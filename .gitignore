@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+
+# Environment
+.env
+backend/.env
+
+# Build output
+frontend/dist/
+frontend/.vinxi/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp clone dirs
+_temp_frontend/
+_temp_backend/
+
+# Model files
+*.gguf
+*.bin
+
+# Logs
+*.log

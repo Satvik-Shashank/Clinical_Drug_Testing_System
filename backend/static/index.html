@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clinical Drug Safety Engine | EvoDoc</title>
+    <meta name="description" content="Production-grade clinical drug interaction checker with AI-powered safety analysis">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ================================================================
+           CSS DESIGN SYSTEM — Clinical Drug Safety Engine
+           Premium dark medical-grade interface
+           ================================================================ */
+
+        :root {
+            /* Core palette */
+            --bg-primary: #0a0e1a;
+            --bg-secondary: #111827;
+            --bg-card: rgba(17, 24, 39, 0.7);
+            --bg-card-hover: rgba(30, 41, 59, 0.8);
+            --bg-input: rgba(15, 23, 42, 0.9);
+            --bg-glass: rgba(255, 255, 255, 0.03);
+
+            /* Accent colors */
+            --accent-primary: #3b82f6;
+            --accent-primary-glow: rgba(59, 130, 246, 0.3);
+            --accent-secondary: #06b6d4;
+            --accent-gradient: linear-gradient(135deg, #3b82f6, #06b6d4);
+
+            /* Severity colors */
+            --severity-critical: #ef4444;
+            --severity-critical-bg: rgba(239, 68, 68, 0.12);
+            --severity-high: #f97316;
+            --severity-high-bg: rgba(249, 115, 22, 0.12);
+            --severity-medium: #eab308;
+            --severity-medium-bg: rgba(234, 179, 8, 0.12);
+            --severity-low: #22c55e;
+            --severity-low-bg: rgba(34, 197, 94, 0.12);
+
+            /* Risk gauge colors */
+            --risk-low: #22c55e;
+            --risk-medium: #eab308;
+            --risk-high: #ef4444;
+
+            /* Text */
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --text-accent: #60a5fa;
+
+            /* Borders */
+            --border-subtle: rgba(148, 163, 184, 0.08);
+            --border-active: rgba(59, 130, 246, 0.4);
+
+            /* Shadows */
+            --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 40px rgba(59, 130, 246, 0.15);
+
+            /* Radii */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Ambient background effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 80%, rgba(6, 182, 212, 0.04) 0%, transparent 50%),
+                        radial-gradient(circle at 50% 50%, rgba(139, 92, 246, 0.03) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ================================================================
+           HEADER
+           ================================================================ */
+
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10, 14, 26, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 0 2rem;
+        }
+
+        .header-inner {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--accent-gradient);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            box-shadow: 0 0 20px var(--accent-primary-glow);
+        }
+
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-text span {
+            color: var(--text-accent);
+        }
+
+        .header-status {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .status-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: var(--bg-glass);
+            padding: 6px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .status-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            animation: pulse-dot 2s ease-in-out infinite;
+        }
+
+        .status-dot.offline {
+            background: #ef4444;
+            animation: none;
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
+            50% { opacity: 0.8; box-shadow: 0 0 0 4px rgba(34, 197, 94, 0); }
+        }
+
+        /* ================================================================
+           MAIN LAYOUT
+           ================================================================ */
+
+        .app-container {
+            position: relative;
+            z-index: 1;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 2rem;
+            min-height: calc(100vh - 64px);
+        }
+
+        @media (max-width: 1100px) {
+            .app-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ================================================================
+           CARDS / GLASS PANELS
+           ================================================================ */
+
+        .card {
+            background: var(--bg-card);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-card);
+            transition: border-color 0.3s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(148, 163, 184, 0.12);
+        }
+
+        .card-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-title .icon {
+            font-size: 1rem;
+        }
+
+        /* ================================================================
+           INPUT FORM
+           ================================================================ */
+
+        .input-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .form-label {
+            font-size: 0.78rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+        }
+
+        .form-input {
+            background: var(--bg-input);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.88rem;
+            transition: all 0.2s ease;
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--accent-primary-glow);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Tag input for drugs */
+        .tag-input-container {
+            background: var(--bg-input);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            padding: 8px 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            min-height: 44px;
+            cursor: text;
+            transition: all 0.2s ease;
+        }
+
+        .tag-input-container:focus-within {
+            border-color: var(--accent-primary);
+            box-shadow: 0 0 0 3px var(--accent-primary-glow);
+        }
+
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(59, 130, 246, 0.15);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            color: var(--text-accent);
+            padding: 3px 10px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            animation: tag-in 0.2s ease;
+        }
+
+        @keyframes tag-in {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .tag.allergy-tag {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            color: #fca5a5;
+        }
+
+        .tag.condition-tag {
+            background: rgba(168, 85, 247, 0.15);
+            border-color: rgba(168, 85, 247, 0.3);
+            color: #c4b5fd;
+        }
+
+        .tag.current-tag {
+            background: rgba(34, 197, 94, 0.15);
+            border-color: rgba(34, 197, 94, 0.3);
+            color: #86efac;
+        }
+
+        .tag-remove {
+            cursor: pointer;
+            font-size: 1rem;
+            line-height: 1;
+            opacity: 0.6;
+            transition: opacity 0.15s;
+        }
+
+        .tag-remove:hover {
+            opacity: 1;
+        }
+
+        .tag-input {
+            border: none;
+            background: transparent;
+            outline: none;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            flex: 1;
+            min-width: 100px;
+        }
+
+        .tag-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        /* Inline fields (age + weight) */
+        .inline-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Submit button */
+        .btn-analyze {
+            width: 100%;
+            padding: 14px;
+            background: var(--accent-gradient);
+            border: none;
+            border-radius: var(--radius-sm);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.92rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-analyze:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 8px 30px var(--accent-primary-glow);
+        }
+
+        .btn-analyze:active {
+            transform: translateY(0);
+        }
+
+        .btn-analyze:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-analyze .spinner {
+            display: none;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin-right: 8px;
+        }
+
+        .btn-analyze.loading .spinner {
+            display: inline-block;
+        }
+
+        .btn-analyze.loading .btn-text {
+            opacity: 0.8;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .btn-clear {
+            width: 100%;
+            padding: 10px;
+            background: transparent;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-sm);
+            color: var(--text-muted);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-clear:hover {
+            border-color: var(--text-muted);
+            color: var(--text-secondary);
+        }
+
+        /* ================================================================
+           RESULTS PANEL
+           ================================================================ */
+
+        .results-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+
+        /* Empty state */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-muted);
+            min-height: 400px;
+        }
+
+        .empty-state .empty-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.4;
+        }
+
+        .empty-state h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            font-size: 0.85rem;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+
+        /* Risk overview strip */
+        .risk-overview {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            gap: 1.5rem;
+            align-items: center;
+            animation: fade-in-up 0.5s ease;
+        }
+
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(16px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Circular risk gauge */
+        .risk-gauge {
+            position: relative;
+            width: 160px;
+            height: 160px;
+            margin: 0 auto;
+        }
+
+        .risk-gauge svg {
+            transform: rotate(-90deg);
+            width: 160px;
+            height: 160px;
+        }
+
+        .risk-gauge .track {
+            fill: none;
+            stroke: rgba(148, 163, 184, 0.08);
+            stroke-width: 10;
+        }
+
+        .risk-gauge .progress {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1.2s ease, stroke 0.5s ease;
+        }
+
+        .risk-gauge .gauge-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .risk-gauge .score-value {
+            font-size: 2.2rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1;
+        }
+
+        .risk-gauge .score-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-top: 4px;
+        }
+
+        /* Risk info panel next to gauge */
+        .risk-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .risk-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            width: fit-content;
+        }
+
+        .risk-badge.low {
+            background: var(--severity-low-bg);
+            color: var(--severity-low);
+            border: 1px solid rgba(34, 197, 94, 0.2);
+        }
+
+        .risk-badge.medium {
+            background: var(--severity-medium-bg);
+            color: var(--severity-medium);
+            border: 1px solid rgba(234, 179, 8, 0.2);
+        }
+
+        .risk-badge.high {
+            background: var(--severity-critical-bg);
+            color: var(--severity-critical);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .safety-verdict {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .verdict-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.85rem;
+        }
+
+        .verdict-icon {
+            font-size: 1rem;
+        }
+
+        .verdict-label {
+            color: var(--text-secondary);
+        }
+
+        .verdict-value {
+            font-weight: 600;
+        }
+
+        .verdict-value.safe { color: var(--severity-low); }
+        .verdict-value.unsafe { color: var(--severity-critical); }
+        .verdict-value.review { color: var(--severity-medium); }
+
+        /* Risk breakdown bar */
+        .breakdown-bars {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 4px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breakdown-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            width: 110px;
+            flex-shrink: 0;
+        }
+
+        .breakdown-bar-track {
+            flex: 1;
+            height: 6px;
+            background: rgba(148, 163, 184, 0.08);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .breakdown-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+            transition: width 1s ease;
+        }
+
+        .breakdown-value {
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            width: 28px;
+            text-align: right;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* ================================================================
+           FINDINGS SECTIONS
+           ================================================================ */
+
+        .finding-section {
+            animation: fade-in-up 0.5s ease;
+        }
+
+        .finding-section:nth-child(2) { animation-delay: 0.1s; }
+        .finding-section:nth-child(3) { animation-delay: 0.2s; }
+        .finding-section:nth-child(4) { animation-delay: 0.3s; }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .count-badge {
+            background: rgba(59, 130, 246, 0.15);
+            color: var(--text-accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .count-badge.danger {
+            background: var(--severity-critical-bg);
+            color: var(--severity-critical);
+        }
+
+        .count-badge.warning {
+            background: var(--severity-medium-bg);
+            color: var(--severity-medium);
+        }
+
+        .count-badge.safe-badge {
+            background: var(--severity-low-bg);
+            color: var(--severity-low);
+        }
+
+        /* Finding cards */
+        .finding-card {
+            background: var(--bg-glass);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 1rem 1.25rem;
+            margin-bottom: 10px;
+            transition: all 0.2s ease;
+            animation: card-enter 0.4s ease;
+        }
+
+        @keyframes card-enter {
+            from { opacity: 0; transform: translateX(-12px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .finding-card:hover {
+            background: var(--bg-card-hover);
+            border-color: rgba(148, 163, 184, 0.12);
+        }
+
+        .finding-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .drug-pair {
+            font-weight: 600;
+            font-size: 0.92rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .drug-pair .drug-name {
+            color: var(--text-primary);
+        }
+
+        .drug-pair .connector {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+
+        .severity-badge {
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            padding: 3px 10px;
+            border-radius: 4px;
+        }
+
+        .severity-badge.critical {
+            background: var(--severity-critical-bg);
+            color: var(--severity-critical);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+
+        .severity-badge.high {
+            background: var(--severity-high-bg);
+            color: var(--severity-high);
+            border: 1px solid rgba(249, 115, 22, 0.25);
+        }
+
+        .severity-badge.medium {
+            background: var(--severity-medium-bg);
+            color: var(--severity-medium);
+            border: 1px solid rgba(234, 179, 8, 0.25);
+        }
+
+        .severity-badge.low {
+            background: var(--severity-low-bg);
+            color: var(--severity-low);
+            border: 1px solid rgba(34, 197, 94, 0.25);
+        }
+
+        .finding-mechanism {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 8px;
+        }
+
+        .finding-recommendation {
+            font-size: 0.8rem;
+            color: var(--text-accent);
+            background: rgba(59, 130, 246, 0.06);
+            border-left: 2px solid var(--accent-primary);
+            padding: 8px 12px;
+            border-radius: 0 6px 6px 0;
+            line-height: 1.5;
+        }
+
+        .finding-recommendation strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* Allergen row */
+        .allergen-info {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Warnings section */
+        .warning-card {
+            background: rgba(234, 179, 8, 0.06);
+            border: 1px solid rgba(234, 179, 8, 0.15);
+            border-radius: var(--radius-sm);
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            font-size: 0.82rem;
+            color: #fde68a;
+            line-height: 1.5;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+        }
+
+        .warning-card .warning-icon {
+            flex-shrink: 0;
+            font-size: 1rem;
+        }
+
+        /* Meta strip */
+        .meta-strip {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            padding: 12px 16px;
+            background: var(--bg-glass);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            animation: fade-in-up 0.5s ease 0.4s both;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+        }
+
+        .meta-label {
+            color: var(--text-muted);
+        }
+
+        .meta-value {
+            font-weight: 600;
+            font-family: 'JetBrains Mono', monospace;
+            color: var(--text-secondary);
+        }
+
+        .meta-value.cached { color: var(--severity-low); }
+        .meta-value.miss { color: var(--text-muted); }
+
+        /* ================================================================
+           NO FINDINGS MESSAGE
+           ================================================================ */
+
+        .no-findings {
+            text-align: center;
+            padding: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            font-style: italic;
+        }
+
+        /* ================================================================
+           SCROLLBAR
+           ================================================================ */
+
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.15);
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.25);
+        }
+
+        /* ================================================================
+           PRESETS
+           ================================================================ */
+
+        .presets {
+            display: flex;
+            gap: 6px;
+            flex-wrap: wrap;
+            margin-top: 4px;
+        }
+
+        .preset-btn {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 500;
+            padding: 4px 10px;
+            border-radius: 4px;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-glass);
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .preset-btn:hover {
+            border-color: var(--accent-primary);
+            color: var(--text-accent);
+            background: rgba(59, 130, 246, 0.08);
+        }
+
+        /* ================================================================
+           ERROR STATE
+           ================================================================ */
+
+        .error-banner {
+            background: var(--severity-critical-bg);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            color: #fca5a5;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            animation: fade-in-up 0.3s ease;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="logo">
+                <div class="logo-icon">🛡</div>
+                <div class="logo-text">Drug<span>Safety</span> Engine</div>
+            </div>
+            <div class="header-status">
+                <div class="status-badge" id="systemStatus">
+                    <div class="status-dot" id="statusDot"></div>
+                    <span id="statusText">Connecting...</span>
+                </div>
+                <div class="status-badge" id="llmStatus">
+                    <span id="llmText">LLM: --</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN -->
+    <main class="app-container">
+
+        <!-- LEFT: Input Panel -->
+        <div class="input-panel">
+
+            <!-- New Medicines -->
+            <div class="card">
+                <div class="card-title"><span class="icon">💊</span> Proposed Medicines</div>
+                <div class="form-group">
+                    <div class="form-label">Add medicines to evaluate (press Enter after each)</div>
+                    <div class="tag-input-container" id="medicinesContainer" onclick="document.getElementById('medicinesInput').focus()">
+                        <input type="text" class="tag-input" id="medicinesInput" placeholder="Type a medicine and press Enter..." autocomplete="off">
+                    </div>
+                    <div class="presets">
+                        <button class="preset-btn" onclick="addPreset('medicines', ['aspirin','ibuprofen'])">+ Aspirin, Ibuprofen</button>
+                        <button class="preset-btn" onclick="addPreset('medicines', ['amoxicillin'])">+ Amoxicillin</button>
+                        <button class="preset-btn" onclick="addPreset('medicines', ['warfarin','methotrexate'])">+ Warfarin, MTX</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient History -->
+            <div class="card">
+                <div class="card-title"><span class="icon">📋</span> Patient History</div>
+
+                <!-- Current Medications -->
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <div class="form-label">Current Medications</div>
+                    <div class="tag-input-container" id="currentMedsContainer" onclick="document.getElementById('currentMedsInput').focus()">
+                        <input type="text" class="tag-input" id="currentMedsInput" placeholder="Current medications..." autocomplete="off">
+                    </div>
+                    <div class="presets">
+                        <button class="preset-btn" onclick="addPreset('currentMeds', ['warfarin','metformin'])">+ Warfarin, Metformin</button>
+                        <button class="preset-btn" onclick="addPreset('currentMeds', ['lisinopril'])">+ Lisinopril</button>
+                    </div>
+                </div>
+
+                <!-- Known Allergies -->
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <div class="form-label">Known Allergies</div>
+                    <div class="tag-input-container" id="allergiesContainer" onclick="document.getElementById('allergiesInput').focus()">
+                        <input type="text" class="tag-input" id="allergiesInput" placeholder="Known drug allergies..." autocomplete="off">
+                    </div>
+                    <div class="presets">
+                        <button class="preset-btn" onclick="addPreset('allergies', ['penicillin'])">+ Penicillin</button>
+                        <button class="preset-btn" onclick="addPreset('allergies', ['nsaids'])">+ NSAIDs</button>
+                        <button class="preset-btn" onclick="addPreset('allergies', ['sulfonamides'])">+ Sulfonamides</button>
+                    </div>
+                </div>
+
+                <!-- Conditions -->
+                <div class="form-group" style="margin-bottom: 14px;">
+                    <div class="form-label">Medical Conditions</div>
+                    <div class="tag-input-container" id="conditionsContainer" onclick="document.getElementById('conditionsInput').focus()">
+                        <input type="text" class="tag-input" id="conditionsInput" placeholder="Medical conditions..." autocomplete="off">
+                    </div>
+                    <div class="presets">
+                        <button class="preset-btn" onclick="addPreset('conditions', ['kidney disease'])">+ Kidney Disease</button>
+                        <button class="preset-btn" onclick="addPreset('conditions', ['pregnancy'])">+ Pregnancy</button>
+                        <button class="preset-btn" onclick="addPreset('conditions', ['diabetes'])">+ Diabetes</button>
+                        <button class="preset-btn" onclick="addPreset('conditions', ['asthma'])">+ Asthma</button>
+                    </div>
+                </div>
+
+                <!-- Age + Weight -->
+                <div class="inline-fields">
+                    <div class="form-group">
+                        <div class="form-label">Age (years)</div>
+                        <input type="number" class="form-input" id="ageInput" placeholder="e.g. 65" min="0" max="150">
+                    </div>
+                    <div class="form-group">
+                        <div class="form-label">Weight (kg)</div>
+                        <input type="number" class="form-input" id="weightInput" placeholder="e.g. 70" min="1" max="500" step="0.1">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <button class="btn-analyze" id="analyzeBtn" onclick="analyzeRequest()">
+                <span class="spinner"></span>
+                <span class="btn-text">🔬 Analyze Drug Safety</span>
+            </button>
+            <button class="btn-clear" onclick="clearAll()">Clear All Fields</button>
+
+        </div>
+
+        <!-- RIGHT: Results Panel -->
+        <div class="results-panel" id="resultsPanel">
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">🏥</div>
+                <h3>Ready for Analysis</h3>
+                <p>Add proposed medicines and patient history, then click Analyze to check for drug interactions, allergy alerts, and contraindications.</p>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        // ================================================================
+        // STATE
+        // ================================================================
+
+        const API_BASE = 'http://127.0.0.1:8000';
+
+        const state = {
+            medicines: [],
+            currentMeds: [],
+            allergies: [],
+            conditions: [],
+        };
+
+        // Tag class mappings
+        const TAG_CLASSES = {
+            medicines: '',
+            currentMeds: 'current-tag',
+            allergies: 'allergy-tag',
+            conditions: 'condition-tag',
+        };
+
+        // ================================================================
+        // TAG INPUT SYSTEM
+        // ================================================================
+
+        function initTagInput(inputId, containerId, stateKey) {
+            const input = document.getElementById(inputId);
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && input.value.trim()) {
+                    e.preventDefault();
+                    addTag(stateKey, input.value.trim(), containerId, inputId);
+                    input.value = '';
+                } else if (e.key === 'Backspace' && !input.value && state[stateKey].length > 0) {
+                    removeLastTag(stateKey, containerId);
+                }
+            });
+        }
+
+        function addTag(stateKey, value, containerId, inputId) {
+            const normalized = value.toLowerCase().trim();
+            if (state[stateKey].includes(normalized)) return;
+            state[stateKey].push(normalized);
+            renderTags(stateKey, containerId, inputId);
+        }
+
+        function removeTag(stateKey, index, containerId, inputId) {
+            state[stateKey].splice(index, 1);
+            renderTags(stateKey, containerId, inputId);
+        }
+
+        function removeLastTag(stateKey, containerId) {
+            const inputId = containerId.replace('Container', 'Input');
+            state[stateKey].pop();
+            renderTags(stateKey, containerId, inputId);
+        }
+
+        function renderTags(stateKey, containerId, inputId) {
+            const container = document.getElementById(containerId);
+            const input = document.getElementById(inputId);
+            const tagClass = TAG_CLASSES[stateKey];
+
+            // Remove existing tags
+            container.querySelectorAll('.tag').forEach(t => t.remove());
+
+            // Add tags before input
+            state[stateKey].forEach((val, i) => {
+                const tag = document.createElement('span');
+                tag.className = `tag ${tagClass}`;
+                tag.innerHTML = `${val} <span class="tag-remove" onclick="removeTag('${stateKey}', ${i}, '${containerId}', '${inputId}')">&times;</span>`;
+                container.insertBefore(tag, input);
+            });
+        }
+
+        function addPreset(stateKey, values) {
+            const containerMap = {
+                medicines: 'medicinesContainer',
+                currentMeds: 'currentMedsContainer',
+                allergies: 'allergiesContainer',
+                conditions: 'conditionsContainer',
+            };
+            const inputMap = {
+                medicines: 'medicinesInput',
+                currentMeds: 'currentMedsInput',
+                allergies: 'allergiesInput',
+                conditions: 'conditionsInput',
+            };
+            values.forEach(v => addTag(stateKey, v, containerMap[stateKey], inputMap[stateKey]));
+        }
+
+        // ================================================================
+        // API CALL
+        // ================================================================
+
+        async function analyzeRequest() {
+            if (state.medicines.length === 0) {
+                showError('Please add at least one medicine to analyze.');
+                return;
+            }
+
+            const btn = document.getElementById('analyzeBtn');
+            btn.classList.add('loading');
+            btn.disabled = true;
+
+            const age = document.getElementById('ageInput').value;
+            const weight = document.getElementById('weightInput').value;
+
+            const payload = {
+                medicines: state.medicines,
+                patient_history: {
+                    current_medications: state.currentMeds,
+                    known_allergies: state.allergies,
+                    conditions: state.conditions,
+                }
+            };
+
+            if (age) payload.patient_history.age = parseInt(age);
+            if (weight) payload.patient_history.weight = parseFloat(weight);
+
+            try {
+                const response = await fetch(`${API_BASE}/api/v1/drug-safety/check`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload),
+                });
+
+                if (!response.ok) {
+                    const err = await response.json();
+                    const msg = err.validation_errors
+                        ? err.validation_errors.map(e => `${e.field}: ${e.message}`).join('; ')
+                        : (err.detail || err.error || 'Request failed');
+                    throw new Error(msg);
+                }
+
+                const data = await response.json();
+                renderResults(data);
+            } catch (error) {
+                showError(error.message || 'Failed to connect to the API server.');
+            } finally {
+                btn.classList.remove('loading');
+                btn.disabled = false;
+            }
+        }
+
+        function showError(message) {
+            const panel = document.getElementById('resultsPanel');
+            panel.innerHTML = `
+                <div class="error-banner">
+                    <span>⚠️</span>
+                    <span>${message}</span>
+                </div>
+            `;
+        }
+
+        // ================================================================
+        // RENDER RESULTS
+        // ================================================================
+
+        function renderResults(data) {
+            const panel = document.getElementById('resultsPanel');
+            let html = '';
+
+            // 1. Risk Overview
+            html += renderRiskOverview(data);
+
+            // 2. Interactions
+            if (data.interactions.length > 0) {
+                html += renderInteractions(data.interactions);
+            }
+
+            // 3. Allergy Alerts
+            if (data.allergy_alerts.length > 0) {
+                html += renderAllergyAlerts(data.allergy_alerts);
+            }
+
+            // 4. Contraindications
+            if (data.contraindications.length > 0) {
+                html += renderContraindications(data.contraindications);
+            }
+
+            // 5. Warnings
+            if (data.warnings && data.warnings.length > 0) {
+                html += renderWarnings(data.warnings);
+            }
+
+            // 6. No findings
+            if (data.interactions.length === 0 && data.allergy_alerts.length === 0 && data.contraindications.length === 0) {
+                html += `<div class="card finding-section">
+                    <div class="no-findings">✅ No interactions, allergy alerts, or contraindications found for the given medicines and patient profile.</div>
+                </div>`;
+            }
+
+            // 7. Meta strip
+            html += renderMeta(data);
+
+            panel.innerHTML = html;
+
+            // Animate gauge after render
+            setTimeout(() => animateGauge(data.patient_risk_score, data.overall_risk_level), 100);
+        }
+
+        function renderRiskOverview(data) {
+            const riskColor = data.overall_risk_level === 'high' ? 'var(--risk-high)' :
+                              data.overall_risk_level === 'medium' ? 'var(--risk-medium)' : 'var(--risk-low)';
+
+            const circumference = 2 * Math.PI * 60; // r=60
+
+            return `
+            <div class="card risk-overview">
+                <div class="risk-gauge">
+                    <svg viewBox="0 0 160 160">
+                        <circle class="track" cx="80" cy="80" r="60"/>
+                        <circle class="progress" id="gaugeProgress" cx="80" cy="80" r="60"
+                            stroke="${riskColor}"
+                            stroke-dasharray="${circumference}"
+                            stroke-dashoffset="${circumference}"/>
+                    </svg>
+                    <div class="gauge-center">
+                        <div class="score-value" id="scoreValue" style="color: ${riskColor}">0</div>
+                        <div class="score-label" style="color: ${riskColor}">${data.overall_risk_level} risk</div>
+                    </div>
+                </div>
+                <div class="risk-info">
+                    <div class="risk-badge ${data.overall_risk_level}">
+                        ${data.overall_risk_level === 'high' ? '🔴' : data.overall_risk_level === 'medium' ? '🟡' : '🟢'}
+                        ${data.overall_risk_level.toUpperCase()} RISK
+                    </div>
+                    <div class="safety-verdict">
+                        <div class="verdict-row">
+                            <span class="verdict-icon">${data.safe_to_prescribe ? '✅' : '🚫'}</span>
+                            <span class="verdict-label">Safe to Prescribe:</span>
+                            <span class="verdict-value ${data.safe_to_prescribe ? 'safe' : 'unsafe'}">
+                                ${data.safe_to_prescribe ? 'Yes' : 'No'}
+                            </span>
+                        </div>
+                        <div class="verdict-row">
+                            <span class="verdict-icon">${data.requires_doctor_review ? '👨‍⚕️' : '✅'}</span>
+                            <span class="verdict-label">Doctor Review:</span>
+                            <span class="verdict-value ${data.requires_doctor_review ? 'review' : 'safe'}">
+                                ${data.requires_doctor_review ? 'Required' : 'Not Required'}
+                            </span>
+                        </div>
+                    </div>
+                    <div class="breakdown-bars">
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Interactions</span>
+                            <div class="breakdown-bar-track">
+                                <div class="breakdown-bar-fill" style="width: ${data.risk_breakdown.interactions}%; background: var(--severity-high);"></div>
+                            </div>
+                            <span class="breakdown-value">${data.risk_breakdown.interactions}</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Allergies</span>
+                            <div class="breakdown-bar-track">
+                                <div class="breakdown-bar-fill" style="width: ${data.risk_breakdown.allergies}%; background: var(--severity-critical);"></div>
+                            </div>
+                            <span class="breakdown-value">${data.risk_breakdown.allergies}</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span class="breakdown-label">Contraindications</span>
+                            <div class="breakdown-bar-track">
+                                <div class="breakdown-bar-fill" style="width: ${data.risk_breakdown.contraindications}%; background: var(--severity-medium);"></div>
+                            </div>
+                            <span class="breakdown-value">${data.risk_breakdown.contraindications}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        function animateGauge(score, level) {
+            const progress = document.getElementById('gaugeProgress');
+            const scoreEl = document.getElementById('scoreValue');
+            if (!progress || !scoreEl) return;
+
+            const circumference = 2 * Math.PI * 60;
+            const offset = circumference - (score / 100) * circumference;
+
+            requestAnimationFrame(() => {
+                progress.style.strokeDashoffset = offset;
+            });
+
+            // Animate number
+            let current = 0;
+            const duration = 1000;
+            const step = score / (duration / 16);
+            const timer = setInterval(() => {
+                current += step;
+                if (current >= score) {
+                    current = score;
+                    clearInterval(timer);
+                }
+                scoreEl.textContent = Math.round(current);
+            }, 16);
+        }
+
+        function renderInteractions(interactions) {
+            let cards = interactions.map(i => `
+                <div class="finding-card">
+                    <div class="finding-card-header">
+                        <div class="drug-pair">
+                            <span class="drug-name">${i.drug_a}</span>
+                            <span class="connector">×</span>
+                            <span class="drug-name">${i.drug_b}</span>
+                        </div>
+                        <span class="severity-badge ${i.severity}">${i.severity}</span>
+                    </div>
+                    <div class="finding-mechanism">${i.mechanism}</div>
+                    <div class="finding-recommendation"><strong>Recommendation:</strong> ${i.clinical_recommendation}</div>
+                </div>
+            `).join('');
+
+            const badgeClass = interactions.some(i => i.severity === 'high') ? 'danger' : 'warning';
+
+            return `
+            <div class="card finding-section">
+                <div class="section-header">
+                    <div class="section-title">⚡ Drug Interactions</div>
+                    <span class="count-badge ${badgeClass}">${interactions.length} found</span>
+                </div>
+                ${cards}
+            </div>`;
+        }
+
+        function renderAllergyAlerts(alerts) {
+            let cards = alerts.map(a => `
+                <div class="finding-card">
+                    <div class="finding-card-header">
+                        <div class="drug-pair">
+                            <span class="drug-name">${a.medicine}</span>
+                            <span class="connector">→</span>
+                            <span class="drug-name">${a.allergen}</span>
+                        </div>
+                        <span class="severity-badge ${a.severity}">${a.severity}</span>
+                    </div>
+                    <div class="allergen-info">${a.reason}</div>
+                </div>
+            `).join('');
+
+            return `
+            <div class="card finding-section">
+                <div class="section-header">
+                    <div class="section-title">🚨 Allergy Alerts</div>
+                    <span class="count-badge danger">${alerts.length} found</span>
+                </div>
+                ${cards}
+            </div>`;
+        }
+
+        function renderContraindications(contras) {
+            let cards = contras.map(c => `
+                <div class="finding-card">
+                    <div class="finding-card-header">
+                        <div class="drug-pair">
+                            <span class="drug-name">${c.medicine}</span>
+                            <span class="connector">+ ${c.condition}</span>
+                        </div>
+                        <span class="severity-badge ${c.severity}">${c.severity}</span>
+                    </div>
+                    <div class="allergen-info">${c.reason}</div>
+                </div>
+            `).join('');
+
+            return `
+            <div class="card finding-section">
+                <div class="section-header">
+                    <div class="section-title">⛔ Contraindications</div>
+                    <span class="count-badge danger">${contras.length} found</span>
+                </div>
+                ${cards}
+            </div>`;
+        }
+
+        function renderWarnings(warnings) {
+            let cards = warnings.map(w => `
+                <div class="warning-card">
+                    <span class="warning-icon">⚠️</span>
+                    <span>${w}</span>
+                </div>
+            `).join('');
+
+            return `
+            <div class="card finding-section">
+                <div class="section-header">
+                    <div class="section-title">📝 Warnings</div>
+                    <span class="count-badge warning">${warnings.length}</span>
+                </div>
+                ${cards}
+            </div>`;
+        }
+
+        function renderMeta(data) {
+            return `
+            <div class="meta-strip">
+                <div class="meta-item">
+                    <span class="meta-label">Source:</span>
+                    <span class="meta-value">${data.source === 'llm' ? '🤖 LLM' : '📚 Fallback'}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Cache:</span>
+                    <span class="meta-value ${data.cache_hit ? 'cached' : 'miss'}">${data.cache_hit ? '✅ Hit' : '○ Miss'}</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Latency:</span>
+                    <span class="meta-value">${data.processing_time_ms.toFixed(2)}ms</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Score Breakdown:</span>
+                    <span class="meta-value">I:${data.risk_breakdown.interactions} A:${data.risk_breakdown.allergies} C:${data.risk_breakdown.contraindications}</span>
+                </div>
+            </div>`;
+        }
+
+        // ================================================================
+        // UTILITY
+        // ================================================================
+
+        function clearAll() {
+            state.medicines = [];
+            state.currentMeds = [];
+            state.allergies = [];
+            state.conditions = [];
+
+            renderTags('medicines', 'medicinesContainer', 'medicinesInput');
+            renderTags('currentMeds', 'currentMedsContainer', 'currentMedsInput');
+            renderTags('allergies', 'allergiesContainer', 'allergiesInput');
+            renderTags('conditions', 'conditionsContainer', 'conditionsInput');
+
+            document.getElementById('ageInput').value = '';
+            document.getElementById('weightInput').value = '';
+
+            document.getElementById('resultsPanel').innerHTML = `
+                <div class="empty-state" id="emptyState">
+                    <div class="empty-icon">🏥</div>
+                    <h3>Ready for Analysis</h3>
+                    <p>Add proposed medicines and patient history, then click Analyze to check for drug interactions, allergy alerts, and contraindications.</p>
+                </div>
+            `;
+        }
+
+        // ================================================================
+        // HEALTH CHECK
+        // ================================================================
+
+        async function checkHealth() {
+            try {
+                const res = await fetch(`${API_BASE}/health`);
+                const data = await res.json();
+
+                document.getElementById('statusDot').classList.remove('offline');
+                document.getElementById('statusText').textContent = 'System Online';
+
+                const llmText = (data.mode && data.mode.includes('llm')) ? 'LLM: Active (Groq)' : 'LLM: Fallback';
+                document.getElementById('llmText').textContent = llmText;
+            } catch {
+                document.getElementById('statusDot').classList.add('offline');
+                document.getElementById('statusText').textContent = 'Offline';
+                document.getElementById('llmText').textContent = 'LLM: --';
+            }
+        }
+
+        // ================================================================
+        // INIT
+        // ================================================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            initTagInput('medicinesInput', 'medicinesContainer', 'medicines');
+            initTagInput('currentMedsInput', 'currentMedsContainer', 'currentMeds');
+            initTagInput('allergiesInput', 'allergiesContainer', 'allergies');
+            initTagInput('conditionsInput', 'conditionsContainer', 'conditions');
+
+            checkHealth();
+            setInterval(checkHealth, 30000);
+        });
+    </script>
+</body>
+</html>

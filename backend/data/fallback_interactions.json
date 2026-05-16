@@ -1,0 +1,144 @@
+{
+  "interactions": [
+    {
+      "drug_a": "warfarin",
+      "drug_b": "aspirin",
+      "severity": "high",
+      "mechanism": "Additive anticoagulant and antiplatelet effects. Both drugs impair hemostasis through different mechanisms — warfarin inhibits vitamin K-dependent clotting factors while aspirin inhibits platelet aggregation via COX-1 inhibition.",
+      "clinical_recommendation": "Avoid combination unless specifically indicated (e.g., mechanical heart valve). If co-prescribed, monitor INR closely and watch for signs of bleeding. Consider using lower aspirin doses (75-100mg)."
+    },
+    {
+      "drug_a": "metformin",
+      "drug_b": "alcohol",
+      "severity": "high",
+      "mechanism": "Alcohol potentiates the effect of metformin on lactate metabolism. Both inhibit gluconeogenesis and can independently cause lactic acidosis. Combined use significantly increases this risk.",
+      "clinical_recommendation": "Advise patients to limit alcohol consumption. Monitor for symptoms of lactic acidosis: nausea, vomiting, abdominal pain, hyperventilation, and malaise. Consider alternative diabetes management if alcohol use is heavy."
+    },
+    {
+      "drug_a": "lisinopril",
+      "drug_b": "potassium",
+      "severity": "high",
+      "mechanism": "ACE inhibitors reduce aldosterone secretion, decreasing potassium excretion. Supplemental potassium combined with this effect can lead to dangerous hyperkalemia, risking cardiac arrhythmias.",
+      "clinical_recommendation": "Avoid potassium supplements unless serum potassium is documented as low. Monitor serum potassium levels within 1 week of starting combination and regularly thereafter. Watch for muscle weakness and cardiac symptoms."
+    },
+    {
+      "drug_a": "simvastatin",
+      "drug_b": "amlodipine",
+      "severity": "medium",
+      "mechanism": "Amlodipine inhibits CYP3A4 metabolism of simvastatin, increasing simvastatin plasma concentrations. This raises the risk of dose-dependent adverse effects including myopathy and rhabdomyolysis.",
+      "clinical_recommendation": "Limit simvastatin dose to 20mg daily when co-administered with amlodipine. Monitor for muscle pain, tenderness, or weakness. Check CK levels if myopathy symptoms develop. Consider switching to rosuvastatin or pravastatin."
+    },
+    {
+      "drug_a": "ciprofloxacin",
+      "drug_b": "antacids",
+      "severity": "medium",
+      "mechanism": "Divalent and trivalent cations in antacids (aluminum, magnesium, calcium) form insoluble chelation complexes with ciprofloxacin in the GI tract, significantly reducing its oral bioavailability by 50-90%.",
+      "clinical_recommendation": "Administer ciprofloxacin at least 2 hours before or 6 hours after antacids. Consider alternative antibiotics if timing cannot be managed. Same applies to calcium, iron, and zinc supplements."
+    },
+    {
+      "drug_a": "methotrexate",
+      "drug_b": "ibuprofen",
+      "severity": "high",
+      "mechanism": "NSAIDs reduce renal blood flow via prostaglandin inhibition, decreasing methotrexate renal clearance. This leads to elevated methotrexate levels and increased risk of bone marrow suppression, hepatotoxicity, and nephrotoxicity.",
+      "clinical_recommendation": "Avoid NSAIDs with high-dose methotrexate. If low-dose methotrexate is used (e.g., for rheumatoid arthritis), use NSAIDs with extreme caution. Monitor CBC and renal function closely. Consider acetaminophen for pain relief."
+    },
+    {
+      "drug_a": "digoxin",
+      "drug_b": "amiodarone",
+      "severity": "high",
+      "mechanism": "Amiodarone inhibits P-glycoprotein-mediated renal and non-renal clearance of digoxin, increasing digoxin serum concentrations by 70-100%. This significantly increases the risk of digoxin toxicity.",
+      "clinical_recommendation": "Reduce digoxin dose by 50% when initiating amiodarone. Monitor digoxin levels within 1 week and adjust dose accordingly. Watch for signs of toxicity: nausea, visual disturbances, arrhythmias."
+    },
+    {
+      "drug_a": "clopidogrel",
+      "drug_b": "omeprazole",
+      "severity": "medium",
+      "mechanism": "Omeprazole inhibits CYP2C19, which is required to convert the prodrug clopidogrel to its active metabolite. This reduces the antiplatelet effect of clopidogrel, potentially increasing cardiovascular event risk.",
+      "clinical_recommendation": "Consider switching to pantoprazole or famotidine, which have less CYP2C19 inhibition. If omeprazole is essential, consider alternative antiplatelet therapy. Separate dosing by 12 hours if combination is unavoidable."
+    },
+    {
+      "drug_a": "fluoxetine",
+      "drug_b": "tramadol",
+      "severity": "high",
+      "mechanism": "Both drugs increase serotonin levels — fluoxetine via SSRI mechanism and tramadol via serotonin reuptake inhibition. Combined use significantly increases the risk of serotonin syndrome, a potentially life-threatening condition.",
+      "clinical_recommendation": "Avoid combination if possible. If co-prescribed, use lowest effective doses and monitor for serotonin syndrome symptoms: agitation, hyperthermia, tachycardia, muscle rigidity, clonus. Seek emergency care if symptoms develop."
+    },
+    {
+      "drug_a": "lithium",
+      "drug_b": "ibuprofen",
+      "severity": "high",
+      "mechanism": "NSAIDs reduce renal prostaglandin synthesis, decreasing renal blood flow and lithium clearance. This can increase lithium serum levels by 15-53%, risking lithium toxicity with narrow therapeutic index.",
+      "clinical_recommendation": "Avoid NSAIDs in patients on lithium. If NSAID use is necessary, monitor lithium levels closely (within 5 days) and adjust dose. Watch for toxicity signs: tremor, ataxia, confusion, nausea. Sulindac may be safer alternative."
+    },
+    {
+      "drug_a": "warfarin",
+      "drug_b": "amiodarone",
+      "severity": "high",
+      "mechanism": "Amiodarone inhibits CYP2C9 and CYP3A4, both involved in warfarin metabolism. This increases warfarin plasma concentrations and potentiates its anticoagulant effect, significantly increasing bleeding risk.",
+      "clinical_recommendation": "Reduce warfarin dose by 30-50% when starting amiodarone. Monitor INR frequently (every 2-3 days initially, then weekly). Note that interaction may persist for weeks after amiodarone discontinuation due to long half-life."
+    },
+    {
+      "drug_a": "lisinopril",
+      "drug_b": "spironolactone",
+      "severity": "high",
+      "mechanism": "Both ACE inhibitors and potassium-sparing diuretics independently increase serum potassium. Combined use creates additive hyperkalemia risk, which can cause fatal cardiac arrhythmias, particularly in renal impairment.",
+      "clinical_recommendation": "If combination is clinically necessary (e.g., heart failure), start spironolactone at low dose (12.5-25mg). Monitor potassium within 3 days, then weekly for first month. Avoid in patients with GFR <30 or baseline K+ >5.0."
+    },
+    {
+      "drug_a": "theophylline",
+      "drug_b": "ciprofloxacin",
+      "severity": "high",
+      "mechanism": "Ciprofloxacin strongly inhibits CYP1A2, the primary enzyme responsible for theophylline metabolism. This can increase theophylline levels by 20-300%, risking serious toxicity including seizures.",
+      "clinical_recommendation": "Avoid combination if possible. If necessary, reduce theophylline dose by 30-50% and monitor serum levels daily. Watch for toxicity: nausea, vomiting, tachycardia, seizures. Consider using azithromycin instead."
+    },
+    {
+      "drug_a": "phenytoin",
+      "drug_b": "carbamazepine",
+      "severity": "medium",
+      "mechanism": "Both drugs are CYP3A4 inducers and substrates. Mutual enzyme induction can lead to decreased levels of both drugs, potentially causing breakthrough seizures. The interaction is complex and bidirectional.",
+      "clinical_recommendation": "Monitor serum levels of both drugs when initiating or changing doses. Adjust doses based on drug levels and clinical response. Be aware that changes may take 1-2 weeks to stabilize due to enzyme induction kinetics."
+    },
+    {
+      "drug_a": "fluoxetine",
+      "drug_b": "phenelzine",
+      "severity": "high",
+      "mechanism": "SSRIs combined with MAOIs cause excessive serotonin accumulation through complementary mechanisms. This can trigger severe serotonin syndrome — a medical emergency with hyperthermia, rigidity, autonomic instability, and potential death.",
+      "clinical_recommendation": "ABSOLUTELY CONTRAINDICATED. Never combine SSRIs with MAOIs. Allow at least 5-week washout after fluoxetine (due to long half-life of norfluoxetine) before starting any MAOI. Allow 2-week washout after stopping MAOI before starting SSRI."
+    },
+    {
+      "drug_a": "insulin",
+      "drug_b": "propranolol",
+      "severity": "medium",
+      "mechanism": "Non-selective beta-blockers mask the adrenergic symptoms of hypoglycemia (tachycardia, tremor, anxiety), delaying recognition and treatment. They also impair glycogenolysis, prolonging hypoglycemic episodes.",
+      "clinical_recommendation": "Use cardioselective beta-blockers (metoprolol, atenolol) preferentially in diabetic patients. Educate patients to recognize non-adrenergic hypoglycemia symptoms (sweating persists). Monitor blood glucose more frequently."
+    },
+    {
+      "drug_a": "digoxin",
+      "drug_b": "verapamil",
+      "severity": "high",
+      "mechanism": "Verapamil inhibits P-glycoprotein-mediated renal clearance of digoxin, increasing levels by 50-75%. Both drugs also have additive effects on AV node conduction, risking severe bradycardia and heart block.",
+      "clinical_recommendation": "Reduce digoxin dose by 33-50% when adding verapamil. Monitor digoxin levels and heart rate/ECG closely. Watch for bradycardia, AV block, and digoxin toxicity signs. Consider diltiazem as a safer alternative."
+    },
+    {
+      "drug_a": "warfarin",
+      "drug_b": "metronidazole",
+      "severity": "high",
+      "mechanism": "Metronidazole inhibits CYP2C9-mediated metabolism of the more potent S-warfarin enantiomer. This stereoselective inhibition substantially increases anticoagulant effect and bleeding risk.",
+      "clinical_recommendation": "Monitor INR within 2-3 days of starting metronidazole. Reduce warfarin dose by 25-50% prophylactically. Short courses (7-10 days) of metronidazole still require monitoring. Re-check INR after metronidazole is stopped."
+    },
+    {
+      "drug_a": "atorvastatin",
+      "drug_b": "clarithromycin",
+      "severity": "high",
+      "mechanism": "Clarithromycin strongly inhibits CYP3A4 and P-glycoprotein, both involved in atorvastatin metabolism and transport. This can increase atorvastatin exposure by 4-5 fold, dramatically increasing risk of rhabdomyolysis.",
+      "clinical_recommendation": "Suspend statin therapy during clarithromycin course if possible. If statin is essential, switch to rosuvastatin or pravastatin (not CYP3A4 dependent). Consider azithromycin as the macrolide — it has minimal CYP3A4 inhibition."
+    },
+    {
+      "drug_a": "metformin",
+      "drug_b": "contrast dye",
+      "severity": "high",
+      "mechanism": "Iodinated contrast media can cause acute kidney injury, impairing metformin excretion. Accumulated metformin in the setting of renal impairment greatly increases the risk of life-threatening lactic acidosis.",
+      "clinical_recommendation": "Withhold metformin on the day of contrast administration and for 48 hours afterward. Check renal function (eGFR) before restarting. If eGFR is >30 and stable, metformin can be resumed. Ensure adequate hydration peri-procedure."
+    }
+  ]
+}
