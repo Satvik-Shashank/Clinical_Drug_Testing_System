@@ -38,35 +38,6 @@ This project demonstrates how to build **"Fail-Safe AI"** in healthcare. It uses
 
 ---
 
-## 🏗️ System Architecture
-
-The architecture is designed around the principle of **Defense in Depth**. The AI is treated as an untrusted microservice.
-
-```mermaid
-graph TD
-    UI[React Frontend Dashboard] -->|Drug Safety Request| API(FastAPI Backend)
-    UI -->|Clinical Note| NLP(Clinical Note Parser)
-    
-    API --> Cache{In-Memory Cache}
-    Cache -->|Miss| Val(Input Validator)
-    Cache -->|Hit| Res(Response Formatter)
-    
-    Val -->|1. LLM Attempt| Groq[Groq API: Llama 3.3 70B]
-    Groq -->|Raw JSON| Filter(Zero-Trust Filter)
-    
-    Filter -->|Validation Fails/Timeout| Fallback[(Deterministic Fallback DB)]
-    Val -->|2. Fallback Attempt| Fallback
-    
-    Filter --> Merger
-    Fallback --> Merger
-    
-    Merger(Safety Rule Merger) -->|Combine w/ Allergies & Contraindications| Risk(Risk Scoring Engine)
-    Risk --> Res
-    Res --> UI
-```
-
----
-
 ## 🔬 Educational Value: Building "Safe" AI in Healthcare
 
 This repository serves as a blueprint for safe AI deployment in clinical settings:
